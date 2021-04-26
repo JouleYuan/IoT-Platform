@@ -12,7 +12,9 @@ function Main(props) {
         }).then(function(response){
             setId(response.data.data);
             setStatus(true);
-        });
+        }).catch((error) => {
+            setStatus(true);
+        })
     });
 
     const selector = (id, status) => {

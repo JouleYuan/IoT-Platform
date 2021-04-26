@@ -1,14 +1,22 @@
-package com.jouleyuan.IoT.backend.user.service.impl;
-
-import java.util.*;
+package com.jouleyuan.IoT.backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.jouleyuan.IoT.backend.user.entity.User;
-import com.jouleyuan.IoT.backend.user.mapper.UserMapper;
-import com.jouleyuan.IoT.backend.user.service.IUserService;
+import com.jouleyuan.IoT.backend.entity.User;
+import com.jouleyuan.IoT.backend.mapper.UserMapper;
+import com.jouleyuan.IoT.backend.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+/**
+ * <p>
+ *  服务实现类
+ * </p>
+ *
+ * @author jobob
+ * @since 2021-04-26
+ */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
     public User getNameAndEmailByID(int id){

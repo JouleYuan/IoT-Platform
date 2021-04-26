@@ -1,21 +1,27 @@
-package com.jouleyuan.IoT.backend.user.controller;
+package com.jouleyuan.IoT.backend.controller;
+
 
 import com.jouleyuan.IoT.backend.common.response.Response;
-import com.jouleyuan.IoT.backend.user.entity.User;
-import com.jouleyuan.IoT.backend.user.service.impl.UserServiceImpl;
-import com.mysql.cj.jdbc.exceptions.SQLError;
+import com.jouleyuan.IoT.backend.entity.User;
+import com.jouleyuan.IoT.backend.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
+/**
+ * <p>
+ *  前端控制器
+ * </p>
+ *
+ * @author jobob
+ * @since 2021-04-26
+ */
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController{
     @Autowired
     private UserServiceImpl userService;
 
@@ -25,7 +31,7 @@ public class UserController {
     }
 
     @RequestMapping(value="/signup", method=RequestMethod.POST)
-    public Response signup(@RequestBody User signupForm, HttpServletRequest request){
+    public Response signup(@RequestBody User signupForm){
         try{
             return new Response(userService.save(signupForm));
         }catch(DataAccessException e){
@@ -36,12 +42,12 @@ public class UserController {
     @RequestMapping(value="/login", method=RequestMethod.POST)
     public Response login(@RequestBody User loginForm, HttpServletRequest request){
         User user = userService.getByEmail(loginForm.getEmail());
-        if(user == null) return new Response(false, "Email does not exist!");
+        if(user == null) return new Response(false, "邮箱不存在!");
         if(user.getPassword().equals(loginForm.getPassword())){
             HttpSession session = request.getSession();
             session.setAttribute("id", user.getId());
             return new Response(true);
-        }else return new Response(false, "Password is wrong!");
+        }else return new Response(false, "密码错误!");
     }
 
     @RequestMapping(value="/logout", method=RequestMethod.DELETE)

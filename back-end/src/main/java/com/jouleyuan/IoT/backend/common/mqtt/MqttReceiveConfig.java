@@ -1,6 +1,7 @@
-package com.jouleyuan.IoT.backend.mqtt;
+package com.jouleyuan.IoT.backend.common.mqtt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jouleyuan.IoT.backend.entity.MqttMessage;
 import lombok.SneakyThrows;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Value;
@@ -79,9 +80,7 @@ public class MqttReceiveConfig {
             public void handleMessage(Message<?> message) throws MessagingException {
                 ObjectMapper mapper = new ObjectMapper();
                 MqttMessage msg = mapper.readValue(message.getPayload().toString(), MqttMessage.class);
-                System.out.println("alert: " + msg.getAlert());
-                System.out.println("clientId: " + msg.getClientId());
-                System.out.println();
+                MqttProcess.processMessage(msg);
             }
         };
     }

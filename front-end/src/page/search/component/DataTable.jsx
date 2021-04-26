@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Table, Input, Button, Space } from 'antd';
+import { Table, Input, Button, Space, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
 import getPosition from "../../tool/position/Position";
-import getAddress from "../../tool/position/Address";
 
 const data = [
     {
@@ -14,6 +13,7 @@ const data = [
         alert: 1,
         lat: 30.14594933986664,
         lng: 120.34829343557358,
+        address: '浙江省杭州市萧山区申达路',
         timestamp: 1619425841299,
     },
     {
@@ -21,10 +21,11 @@ const data = [
         deviceId: 'device0002',
         info: "Device Data 2021/04/26 16:30:41",
         value: 94,
-        alert: 1,
+        alert: 0,
         lat: 30.14594933986664,
         lng: 120.34829343557358,
-        timestamp: 1619425841299,
+        address: '浙江省杭州市萧山区山南坊桥',
+        timestamp: 1619425841289,
     },
     {
         id: '3',
@@ -34,7 +35,8 @@ const data = [
         alert: 0,
         lat: 30.14594933986664,
         lng: 120.34829343557358,
-        timestamp: 1619425841299,
+        address: '浙江省杭州市萧山区山南坊桥',
+        timestamp: 1619425840299,
     },
     {
         id: '4',
@@ -44,7 +46,8 @@ const data = [
         alert: 0,
         lat: 30.14594933986664,
         lng: 120.34829343557358,
-        timestamp: 1619425841299,
+        address: '浙江省杭州市萧山区山南坊桥',
+        timestamp: 1619425841399,
     },
 ];
 
@@ -54,14 +57,13 @@ function DataTable(){
 
     for(let i = 0; i < data.length; i++){
         data[i].position = getPosition(data[i].lat, data[i].lng);
-        getAddress(data[i].lat, data[i].lng);
     }
 
     const getColumnSearchProps = dataIndex => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
             <div style={{ padding: 8 }}>
                 <Input
-                    placeholder={`Search ${dataIndex}`}
+                    placeholder={`输入关键词`}
                     value={selectedKeys[0]}
                     onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
                     onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
@@ -75,21 +77,10 @@ function DataTable(){
                         size="small"
                         style={{ width: 90 }}
                     >
-                        Search
+                        搜索
                     </Button>
                     <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-                        Reset
-                    </Button>
-                    <Button
-                        type="link"
-                        size="small"
-                        onClick={() => {
-                            confirm({ closeDropdown: false });
-                            setSearchText(selectedKeys[0]);
-                            setSearchedColumn(dataIndex);
-                        }}
-                    >
-                        Filter
+                        重置
                     </Button>
                 </Space>
             </div>
@@ -129,12 +120,17 @@ function DataTable(){
         setSearchText('');
     };
 
+    const selectTag = alert => {
+        if(alert === 0) return(<Tag color="success">正常</Tag>)
+        else return (<Tag color="error">异常</Tag>)
+    };
+
     const columns = [
         {
             title: '设备ID',
             dataIndex: 'deviceId',
-            key: 'name',
-            ...getColumnSearchProps('name'),
+            key: 'deviceId',
+            ...getColumnSearchProps('deviceId'),
         },
         {
             title: '上报信息',
@@ -152,7 +148,19 @@ function DataTable(){
             title: '警报信息',
             dataIndex: 'alert',
             key: 'alert',
-            ...getColumnSearchProps('alert'),
+            render: alert => <>{selectTag(alert)}</>,
+            filters: [
+                {
+                    text: '正常',
+                    value: 0,
+                },
+                {
+                    text: '异常',
+                    value: 1,
+                },
+            ],
+            filterMultiple: false,
+            onFilter: (value, record) => record.alert === value,
         },
         {
             title: '设备坐标',
@@ -160,18 +168,18 @@ function DataTable(){
             key: 'position',
             ...getColumnSearchProps('position'),
         },
-        /*
         {
             title: '设备位置',
             dataIndex: 'address',
             key: 'address',
             ...getColumnSearchProps('address'),
-        },*/
+        },
         {
             title: '上报时间',
             dataIndex: 'timestamp',
             key: 'timestamp',
-            ...getColumnSearchProps('timestamp'),
+            sorter: (a, b) => a.timestamp - b.timestamp,
+            render: timestamp => <>{new Date(timestamp).toLocaleString('ja-JP')}</>
         },
     ];
 

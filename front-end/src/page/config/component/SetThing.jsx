@@ -28,14 +28,7 @@ function SetThing(props){
     return(
         <>
             <SettingOutlined onClick={showModal}/>
-            <Modal title="修改设备" visible={isModalVisible} onCancel={handleCancel} footer={[
-                <Button key="cancel" onClick={handleCancel}>
-                    取消
-                </Button>,
-                <Button key="Ok" type="primary" onClick={handleOk}>
-                    确认
-                </Button>
-            ]}>
+            <Modal title="修改设备" visible={isModalVisible} onCancel={handleCancel} onOk={handleOk}>
                 <Form {...FormItemLayout(24, 4, 24, 20)}
                       onFinish={onFinish}
                       form = {form}
