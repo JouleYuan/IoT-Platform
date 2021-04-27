@@ -12,7 +12,7 @@ import sun.net.www.http.HttpClient;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MqttProcessTest {
-    final static String AK = "yFpYyZaE8r3IMAAIbHxx7hA3MvrDNCzY";
+    final static String AK = "4GyddLDnLsOgsgT78y5ZIGhmT9hfMHwL";
     final static String BASE_URL = "http://api.map.baidu.com/reverse_geocoding/v3/?output=json&coordtype=wgs84ll";
 
     @Test
