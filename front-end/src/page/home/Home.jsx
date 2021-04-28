@@ -5,7 +5,6 @@ import { Layout, Row, Col } from 'antd';
 import Head from "../common/Head";
 import Foot from "../common/Foot";
 import GetWinSize from "../tool/GetWinSize";
-import BackTopButton from "../common/BackTopButton";
 import Main from "../common/Main";
 import updateDeviceData from "../tool/UpdateDeviceData";
 import Number from "./component/Number";
@@ -57,7 +56,6 @@ function Home() {
                     </Content>
                     <Foot/>
                 </Layout>
-                <BackTopButton/>
             </>
         )
     };

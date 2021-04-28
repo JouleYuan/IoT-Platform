@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: IoT
     password: 123456
-    url: jdbc:mysql://47.100.55.98:3306/IoT?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/IoT?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
   redis:
     database: 0
     host: localhost
@@ -15,7 +15,7 @@ spring:
         max-idle: 8
         max-wait: -1
   mqtt:
-    url: tcp://47.100.55.98:1883
+    url: tcp://localhost:1883
     client-id: server
     topic: testapp
     timeout: 3000

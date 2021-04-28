@@ -1081,6 +1081,11 @@ function TrackMap(props){
                 option.series[index * 2].data[0].coords.push([message[i].lng, message[i].lat]);
                 option.series[index * 2 + 1].data[0].coords.push([message[i].lng, message[i].lat]);
             }
+            for(let i=0; i<option.series.length; i++){
+                option.series = option.series.filter((item)=>{
+                    return item.data[0].coords.length > 0;
+                })
+            }
         }
 
         const renderedInstance = echarts.getInstanceByDom(chartRef.current);

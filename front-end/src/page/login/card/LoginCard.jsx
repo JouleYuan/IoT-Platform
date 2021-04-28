@@ -1,22 +1,10 @@
 import React from 'react';
 import axios from '../../tool/Axios';
-import { useState } from 'react';
-import { Form, Input, Button, Card, Modal } from 'antd';
+import { Form, Input, Button, Card, message } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import "./LoginCard.css"
 
 function LoginCard(){
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [msg, setMsg] = useState("登录失败!");
-
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
-
-    const handleOk = () => {
-        setIsModalVisible(false);
-    };
-
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
         axios({
@@ -32,8 +20,7 @@ function LoginCard(){
         }).then(function(response){
             if(response.data.data === true) window.location.href = "/";
             else {
-                setMsg(response.data.msg);
-                showModal();
+                message.error('邮箱或密码错误');
             }
         });
     };
@@ -80,12 +67,6 @@ function LoginCard(){
                     </Form.Item>
                 </Form>
             </Card>
-            <Modal title="Notification" visible={isModalVisible} onCancel={handleOk} footer={[
-                <Button key="OK" type="primary" onClick={handleOk}>
-                    确认
-                </Button>]}>
-                <p>{msg}</p>
-            </Modal>
         </>
     )
 }

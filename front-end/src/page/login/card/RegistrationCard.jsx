@@ -1,21 +1,10 @@
 import React from 'react';
 import axios from "../../tool/Axios";
-import { useState } from 'react';
-import { Form, Input, Card, Button, Modal } from 'antd';
+import { Form, Input, Card, Button, message } from 'antd';
 import FormItemLayout from "../../tool/FormItemLayout";
 import "./LoginCard.css"
 
 function RegistrationCard(){
-    const [isModalVisible, setIsModalVisible] = useState(false);
-
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
-
-    const handleOk = () => {
-        setIsModalVisible(false);
-    };
-
     const onFinish = (values) => {
         axios({
             method: 'post',
@@ -30,7 +19,7 @@ function RegistrationCard(){
             },
         }).then(function(response){
             if(response.data.data === true) window.location.href = "/login";
-            else showModal();
+            else message.error('用户名或邮箱重复，请尝试其它用户名或邮箱');
         });
     };
 
@@ -177,12 +166,6 @@ function RegistrationCard(){
                     </Form.Item>
                 </Form>
             </Card>
-            <Modal title="Notification" visible={isModalVisible} onCancel={handleOk} footer={[
-                <Button key="OK" type="primary" onClick={handleOk}>
-                    确认
-                </Button>]}>
-                <p>注册失败！</p>
-            </Modal>
         </>
     );
 }

@@ -3,7 +3,6 @@ import { Layout } from 'antd';
 import Head from "../common/Head";
 import Foot from "../common/Foot";
 import GetWinSize from "../tool/GetWinSize";
-import BackTopButton from "../common/BackTopButton";
 import Main from "../common/Main";
 import TrackMap from "./component/TrackMap";
 import updateDeviceData from "../tool/UpdateDeviceData";
@@ -40,7 +39,6 @@ function Map(){
                     </Content>
                     <Foot/>
                 </Layout>
-                <BackTopButton/>
             </>
         )
     };
