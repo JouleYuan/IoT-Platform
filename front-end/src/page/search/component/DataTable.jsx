@@ -1,63 +1,28 @@
-import { useState } from 'react';
+import React from 'react';
+import axios from "../../tool/Axios";
+import { useState, useEffect } from 'react';
 import { Table, Input, Button, Space, Tag } from 'antd';
-import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
-import getPosition from "../../tool/position/Position";
-
-const data = [
-    {
-        id: '1',
-        deviceId: 'device0002',
-        info: "Device Data 2021/04/26 16:30:41",
-        value: 94,
-        alert: 1,
-        lat: 30.14594933986664,
-        lng: 120.34829343557358,
-        address: '浙江省杭州市萧山区申达路',
-        timestamp: 1619425841299,
-    },
-    {
-        id: '2',
-        deviceId: 'device0002',
-        info: "Device Data 2021/04/26 16:30:41",
-        value: 94,
-        alert: 0,
-        lat: 30.14594933986664,
-        lng: 120.34829343557358,
-        address: '浙江省杭州市萧山区山南坊桥',
-        timestamp: 1619425841289,
-    },
-    {
-        id: '3',
-        deviceId: 'device0005',
-        info: "Device Data 2021/04/26 16:30:41",
-        value: 11,
-        alert: 0,
-        lat: 30.14594933986664,
-        lng: 120.34829343557358,
-        address: '浙江省杭州市萧山区山南坊桥',
-        timestamp: 1619425840299,
-    },
-    {
-        id: '4',
-        deviceId: 'device0003',
-        info: "Device Data 2021/04/26 16:30:41",
-        value: 24,
-        alert: 0,
-        lat: 30.14594933986664,
-        lng: 120.34829343557358,
-        address: '浙江省杭州市萧山区山南坊桥',
-        timestamp: 1619425841399,
-    },
-];
+import Highlighter from 'react-highlight-words';
+import getPosition from "../../tool/Position";
 
 function DataTable(){
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
+    const [data, setData] = useState([]);
 
-    for(let i = 0; i < data.length; i++){
-        data[i].position = getPosition(data[i].lat, data[i].lng);
-    }
+    useEffect(() => {
+        axios({
+            method: 'get',
+            url: '/message',
+        }).then(function(response){
+            let tmp_data = response.data.data;
+            for(let i = 0; i < tmp_data.length; i++){
+                tmp_data[i].position = getPosition(tmp_data[i].lat, tmp_data[i].lng);
+            }
+            setData(tmp_data);
+        })
+    }, []);
 
     const getColumnSearchProps = dataIndex => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -128,9 +93,9 @@ function DataTable(){
     const columns = [
         {
             title: '设备ID',
-            dataIndex: 'deviceId',
-            key: 'deviceId',
-            ...getColumnSearchProps('deviceId'),
+            dataIndex: 'clientId',
+            key: 'clientId',
+            ...getColumnSearchProps('clientId'),
         },
         {
             title: '上报信息',

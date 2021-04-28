@@ -36,6 +36,8 @@ public class MqttReceiveConfig {
     @Value("${spring.mqtt.timeout}")
     private int completionTimeout;
 
+    MqttProcess mqttProcess = new MqttProcess();
+
     @Bean
     public MqttConnectOptions getMqttConnectOptions(){
         MqttConnectOptions mqttConnectOptions=new MqttConnectOptions();
@@ -80,7 +82,7 @@ public class MqttReceiveConfig {
             public void handleMessage(Message<?> message) throws MessagingException {
                 ObjectMapper mapper = new ObjectMapper();
                 MqttMessage msg = mapper.readValue(message.getPayload().toString(), MqttMessage.class);
-                MqttProcess.processMessage(msg);
+                mqttProcess.processMessage(msg);
             }
         };
     }

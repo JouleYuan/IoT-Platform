@@ -1,7 +1,8 @@
+import React from 'react';
+import axios from '../../tool/Axios';
 import { useState } from 'react';
 import { Form, Input, Button, Card, Modal } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
-import axios from '../../tool/Axios';
 import "./LoginCard.css"
 
 function LoginCard(){

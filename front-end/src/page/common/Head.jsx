@@ -31,7 +31,7 @@ function Head(props){
             method: 'delete',
             url: '/user/logout',
         });
-        window.location.href = "/login";
+        window.location.href = "/";
     };
 
     const onLogin = () => {

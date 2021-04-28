@@ -1,8 +1,9 @@
+import React from 'react';
+import axios from "../../tool/Axios";
 import { useState } from 'react';
 import { Form, Input, Card, Button, Modal } from 'antd';
-import "./LoginCard.css"
-import axios from "../../tool/Axios";
 import FormItemLayout from "../../tool/FormItemLayout";
+import "./LoginCard.css"
 
 function RegistrationCard(){
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -16,7 +17,6 @@ function RegistrationCard(){
     };
 
     const onFinish = (values) => {
-        console.log('Received values of form: ', values);
         axios({
             method: 'post',
             url: '/user/signup',

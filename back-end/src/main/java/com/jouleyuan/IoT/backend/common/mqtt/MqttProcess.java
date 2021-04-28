@@ -12,20 +12,33 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
+@Component
 public class MqttProcess {
     @Autowired
-    static private DeviceServiceImpl deviceService;
+    private DeviceServiceImpl deviceService;
 
     @Autowired
-    static private MqttMessageServiceImpl mqttMessageService;
+    private MqttMessageServiceImpl mqttMessageService;
+
+    public static MqttProcess mqttProcess;
+
+    @PostConstruct
+    public void init(){
+        mqttProcess = this;
+        mqttProcess.deviceService = this.deviceService;
+        mqttProcess.mqttMessageService = this.mqttMessageService;
+    }
 
     static CloseableHttpClient client = HttpClients.createDefault();
 
-    final static String AK = "yFpYyZaE8r3IMAAIbHxx7hA3MvrDNCzY";
-    final static String BASE_URL = "http://api.map.baidu.com/reverse_geocoding/v3/?output=json&coordtype=wgs84ll";
+    final static String AK = "4GyddLDnLsOgsgT78y5ZIGhmT9hfMHwL";
+    final static String BASE_URL = "http://api.map.baidu.com/reverse_geocoding/v3/?output=json&coordtype=bd09ll";
 
-    static String getAddress(Double lat, Double lng){
+    String getAddress(Double lat, Double lng){
         String url = BASE_URL + "&ak=" + AK + "&location=" + lat + "," + lng;
         HttpGet get = new HttpGet(url);
         try{
@@ -43,20 +56,16 @@ public class MqttProcess {
         }
     }
 
-    static void processMessage(MqttMessage msg){
-        System.out.println("alert: " + msg.getAlert());
-        System.out.println("clientId: " + msg.getClientId());
-        System.out.println();
-
-        Device device = deviceService.getById(msg.getClientId());
-        if(device == null) return;
-
+    void processMessage(MqttMessage msg){
         try{
+            Device device = mqttProcess.deviceService.getById(msg.getClientId());
+            if(device == null) return;
+
             device.setTimestamp(msg.getTimestamp());
-            deviceService.updateById(device);
+            mqttProcess.deviceService.updateById(device);
 
             msg.setAddress(getAddress(msg.getLat(), msg.getLng()));
-            mqttMessageService.save(msg);
+            mqttProcess.mqttMessageService.save(msg);
 
         }catch(DataAccessException e){
             System.out.println(e.getMessage());

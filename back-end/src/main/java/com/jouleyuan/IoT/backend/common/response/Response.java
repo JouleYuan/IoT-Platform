@@ -10,6 +10,7 @@ public class Response {
     public static final int UNKNOWN_ERROR = 0;
     public static final int SUCCESS = 1;
     public static final int DATABASE_ERROR = 2;
+    public static final int AUTHORIZATION_ERROR = 3;
 
     public Response(Object data){
         this.data = data;

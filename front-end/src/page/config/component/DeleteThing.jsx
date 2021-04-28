@@ -1,6 +1,9 @@
+import React from 'react';
+import axios from "../../tool/Axios";
 import { useState } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal, message } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import updateDeviceData from "../../tool/UpdateDeviceData";
 
 function DeleteThing(props){
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -10,6 +13,20 @@ function DeleteThing(props){
     };
 
     const handleOk = () => {
+        axios({
+            method: 'delete',
+            url: '/device',
+            params:{
+                id: props.device.id,
+            }
+        }).then(function(response){
+            if(response.data.data === true){
+                message.success(response.data.msg);
+                updateDeviceData(props.setCard);
+            }else{
+                message.error(response.data.msg);
+            }
+        });
         setIsModalVisible(false);
     };
 

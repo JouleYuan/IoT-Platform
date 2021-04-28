@@ -1,9 +1,12 @@
+import React from 'react';
+import axios from "../../tool/Axios";
 import { useState } from 'react';
-import { Modal, Button, Col, Form, Input } from 'antd';
+import { Modal, Button, Col, Form, Input, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import FormItemLayout from "../../tool/FormItemLayout";
+import updateDeviceData from "../../tool/UpdateDeviceData";
 
-function AddThing(){
+function AddThing(props){
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const [form] = Form.useForm();
@@ -21,7 +24,25 @@ function AddThing(){
     };
 
     const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+        axios({
+            method: 'post',
+            url: '/device',
+            data: {
+                'id': values.id,
+                'name': values.name,
+            },
+            header:{
+                'Content-Type':'application/json',
+            },
+        }).then(function(response){
+            if(response.data.data === true){
+                message.success(response.data.msg);
+                updateDeviceData(props.setCard);
+            }
+            else{
+                message.error(response.data.msg);
+            }
+        });
         form.setFieldsValue({
             id: "",
             name: "",
@@ -30,7 +51,7 @@ function AddThing(){
     };
 
     return(
-        <Col span={6}>
+        <Col span={6} className="add-thing-col">
             <Button
                 type="primary"
                 shape="circle"

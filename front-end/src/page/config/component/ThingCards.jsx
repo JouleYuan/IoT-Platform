@@ -1,40 +1,35 @@
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { Row, Col, Card, List } from 'antd';
-import "./ThingCard.css"
 import AddThing from "./AddThing";
 import DeleteThing from "./DeleteThing";
 import SetThing from "./SetThing";
+import updateDeviceData from "../../tool/UpdateDeviceData";
+import "./ThingCard.css"
 
-const card = [
-    {
-        name: "天猫精灵",
-        id: "device0005",
-        status: "在线",
-    },
-    {
-        name: "索尼OLED智能电视",
-        id: "device0002",
-        status: "离线",
-    }
-];
-
-function operations(id, device) {
+function operations(id, device, setCard) {
     if(id === null || id === undefined) return [];
-    else return [<SetThing device={device}/>, <DeleteThing device={device}/>,];
+    else return [<SetThing device={device} setCard={setCard}/>, <DeleteThing device={device} setCard={setCard}/>,];
 }
 
-function addButton(id) {
+function addButton(id, setCard) {
     if(id === null || id === undefined) return <div/>;
-    else return <AddThing/>
+    else return <AddThing setCard={setCard}/>
 }
 
 function ThingCards(props){
+    const [card, setCard] = useState([]);
+    useEffect(async ()=>{
+        updateDeviceData(setCard);
+    }, card);
+
     return(
         <Row gutter={[30, 30]}>
             {
                 card.map((item)=>(
                     <Col span={6}>
                         <Card
-                            actions={operations(props.id, item)}
+                            actions={operations(props.id, item, setCard)}
                         >
                             <List itemLayout="horizontal">
                                 <List.Item>
@@ -60,7 +55,7 @@ function ThingCards(props){
                     </Col>
                 ))
             }
-            {addButton(props.id)}
+            {addButton(props.id, setCard)}
         </Row>
     )
 }

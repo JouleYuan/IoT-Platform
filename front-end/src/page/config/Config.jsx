@@ -1,3 +1,4 @@
+import React from 'react';
 import { Layout } from 'antd';
 import Head from "../common/Head";
 import Foot from "../common/Foot";

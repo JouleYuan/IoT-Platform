@@ -1,7 +1,10 @@
+import React from 'react';
+import axios from "../../tool/Axios";
 import { useState } from 'react';
-import { Modal, Button, Form, Input } from 'antd';
+import { Modal, Form, Input, message } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import FormItemLayout from "../../tool/FormItemLayout";
+import updateDeviceData from "../../tool/UpdateDeviceData";
 
 function SetThing(props){
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -21,7 +24,24 @@ function SetThing(props){
     };
 
     const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+        axios({
+            method: 'put',
+            url: '/device',
+            data: {
+                'id': props.device.id,
+                'name': values.name,
+            },
+            header:{
+                'Content-Type':'application/json',
+            },
+        }).then(function(response){
+            if(response.data.data === true){
+                message.success(response.data.msg);
+                updateDeviceData(props.setCard);
+            }else{
+                message.error(response.data.msg);
+            }
+        });
         setIsModalVisible(false);
     };
 
@@ -37,7 +57,7 @@ function SetThing(props){
                         name="id"
                         label="设备ID"
                     >
-                        <Input defaultValue={props.device.id} disabled/>
+                        <Input key={props.device.id} defaultValue={props.device.id} disabled/>
                     </Form.Item>
                     <Form.Item
                         name="name"
@@ -55,7 +75,7 @@ function SetThing(props){
                             },
                         ]}
                     >
-                        <Input defaultValue={props.device.name}/>
+                        <Input key={props.device.name} defaultValue={props.device.name}/>
                     </Form.Item>
                 </Form>
             </Modal>

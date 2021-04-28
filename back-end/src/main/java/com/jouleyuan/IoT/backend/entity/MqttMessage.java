@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @Data
 public class MqttMessage{
-    private Long id;
+    private long id;
 
     private String clientId;
 

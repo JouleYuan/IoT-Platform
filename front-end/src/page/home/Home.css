@@ -1,0 +1,20 @@
+.home-number{
+    text-align: center;
+}
+
+.home-number .ant-statistic-title{
+    font-size: 18px;
+}
+
+.home-number .ant-statistic-content{
+    font-size: 30px;
+}
+
+.interval-radio{
+    align-self: center;
+}
+
+.interval-radio-col{
+    display: flex;
+    flex-direction: column;
+}

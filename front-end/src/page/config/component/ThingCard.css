@@ -7,6 +7,10 @@
     height: 100px;
 }
 
+.add-thing-col{
+    min-height: 248px;
+}
+
 .thing-card-plus{
     margin-top: 5px;
     font-size: 60px;

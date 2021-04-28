@@ -1,7 +1,8 @@
+import React from 'react';
 import GetWinSize from "../tool/GetWinSize";
 import LoginCard from "./card/LoginCard";
-import "./Login.css";
 import RegistrationCard from "./card/RegistrationCard";
+import "./Login.css";
 
 function Login(props){
     const size = GetWinSize();
