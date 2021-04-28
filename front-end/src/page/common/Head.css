@@ -7,10 +7,12 @@
 
 .header-logo{
     float: left;
-    width: 120px;
-    height: 31px;
-    margin: 16px 24px 16px 0;
-    background: rgba(0, 0, 0, 0.2);
+    width: 144px;
+    height: 63px;
+    margin: 0 15px 0 0;
+    background-image: url("../../image/logo.png");
+    background-size:contain;
+    cursor:pointer;
 }
 
 .header-avatar{

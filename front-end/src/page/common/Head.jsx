@@ -51,12 +51,12 @@ function Head(props){
 
     return(
         <Header className="header-layout">
-            <div className="header-logo" />
+            <div className="header-logo" onClick={()=>{window.location.href='/'}}/>
             <Menu theme="light" mode="horizontal" defaultSelectedKeys={[props.index]}>
                 <Menu.Item key="1" onClick={()=>{window.location.href='/'}}>首页</Menu.Item>
                 <Menu.Item key="2" onClick={()=>{window.location.href='/config'}}>设备配置</Menu.Item>
                 <Menu.Item key="3" onClick={()=>{window.location.href='/search'}}>数据查询</Menu.Item>
-                <Menu.Item key="4" onClick={()=>{window.location.href='/map'}}>设备地图</Menu.Item>
+                <Menu.Item key="4" onClick={()=>{window.location.href='/map'}}>设备轨迹</Menu.Item>
                 <a href={"/"}>
                     <Avatar className="header-avatar" size="large" icon={<UserOutlined />}/>
                 </a>

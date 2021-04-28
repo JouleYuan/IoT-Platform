@@ -1052,17 +1052,36 @@ function TrackMap(props){
                     data: [{coords:[]}],
                     polyline: true,
                     lineStyle: {
+                        opacity: 0.4,
                         width: 2
-                    }
+                    },
+                    progressiveThreshold: 500,
+                    progressive: 200
+                },{
+                    name: option.legend.data[i],
+                    type: 'lines',
+                    coordinateSystem: 'bmap',
+                    data: [{coords:[]}],
+                    polyline: true,
+                    lineStyle: {
+                        width: 0
+                    },
+                    effect: {
+                        constantSpeed: 60,
+                        show: true,
+                        trailLength: 0.4,
+                        symbolSize: 4
+                    },
+                    zlevel: 1
                 });
             }
             let message = props.message.sort((a, b)=>{return a.timestamp - b.timestamp});
             for(let i=0; i<message.length;i++){
-                option.series[deviceId.indexOf(message[i].clientId)].data[0].coords.push([message[i].lng, message[i].lat]);
+                let index = deviceId.indexOf(message[i].clientId);
+                option.series[index * 2].data[0].coords.push([message[i].lng, message[i].lat]);
+                option.series[index * 2 + 1].data[0].coords.push([message[i].lng, message[i].lat]);
             }
         }
-
-        console.log(option);
 
         const renderedInstance = echarts.getInstanceByDom(chartRef.current);
         if (renderedInstance) {
