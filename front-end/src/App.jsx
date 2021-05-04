@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -14,7 +15,7 @@ import ServerError from "./page/error/ServerError";
 import Search from "./page/search/Search";
 import Map from "./page/map/Map";
 
-function App(props){
+function App(){
     return (
         <div className="App">
             <ConfigProvider locale={zhCN}>

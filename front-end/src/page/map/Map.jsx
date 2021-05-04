@@ -31,15 +31,13 @@ function Map(){
 
     const searchPage = (id) => {
         return (
-            <>
-                <Layout style={{height: size.height}}>
-                    <Head index='4' id={id}/>
-                    <Content className="content-layout" style={{height: '100%'}}>
-                        <TrackMap device={device} message={message}/>
-                    </Content>
-                    <Foot/>
-                </Layout>
-            </>
+            <Layout style={{height: size.height}}>
+                <Head index='4' id={id}/>
+                <Content className="content-layout" style={{height: '100%'}}>
+                    <TrackMap device={device} message={message}/>
+                </Content>
+                <Foot/>
+            </Layout>
         )
     };
 

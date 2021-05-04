@@ -7,7 +7,7 @@ function TrackMap(props){
     const option = {
         bmap: {
             center: [120.170576, 30.260478],
-            zoom: 14,
+            zoom: 12,
             roam: true,
             mapStyle: {
                 styleJson: [{

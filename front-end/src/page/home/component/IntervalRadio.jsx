@@ -11,7 +11,7 @@ function IntervalRadio(props){
     return (
         <Radio.Group onChange={onChange} value={props.interval} className="interval-radio">
             <Space>
-                <Title level={5}>间隔时间</Title>
+                <Title level={5} className="interval-radio-title">间隔时间</Title>
                 <Radio value={1000}>1秒</Radio>
                 <Radio value={10000}>10秒</Radio>
                 <Radio value={60000}>1分钟</Radio>

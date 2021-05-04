@@ -37,26 +37,24 @@ function Home() {
 
     const homePage = (id) => {
         return(
-            <>
-                <Layout style={{minHeight: size.height}}>
-                    <Head index='1' id={id}/>
-                    <Content className="content-layout">
-                        <Number device={device} message={message}/>
-                        <Row gutter={10} justify="center" align="middle">
-                            <Col span={24}>
-                                <MessageDeviceHistogram device={device} message={message}/>
-                            </Col>
-                            <Col span={24}>
-                                <MessageTimeLine message={message} interval={interval}/>
-                            </Col>
-                            <Col span={24} className="interval-radio-col">
-                                <IntervalRadio interval={interval} setInterval={setInterval}/>
-                            </Col>
-                        </Row>
-                    </Content>
-                    <Foot/>
-                </Layout>
-            </>
+            <Layout style={{minHeight: size.height}}>
+                <Head index='1' id={id}/>
+                <Content className="content-layout">
+                    <Number device={device} message={message}/>
+                    <Row gutter={10} justify="center" align="middle">
+                        <Col span={24}>
+                            <MessageDeviceHistogram device={device} message={message}/>
+                        </Col>
+                        <Col span={24}>
+                            <MessageTimeLine message={message} interval={interval}/>
+                        </Col>
+                        <Col span={24} className="interval-radio-col">
+                            <IntervalRadio interval={interval} setInterval={setInterval}/>
+                        </Col>
+                    </Row>
+                </Content>
+                <Foot/>
+            </Layout>
         )
     };
 
