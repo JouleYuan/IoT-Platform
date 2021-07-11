@@ -2,7 +2,7 @@
 
 This is a course project for ZJU B/S course. 
 
-The [IoT-Platform](http://47.100.55.98/) project is a web application based on React and Spring boot, which provides MQTT based IoT services.
+The IoT-Platform project is a web application based on React and Spring boot, which provides MQTT based IoT services.
 
 ## Build
 
@@ -85,7 +85,7 @@ Edit iot.properties and run the program. In default, the program would generate 
 
 ### Website
 
-You can visit http://47.100.55.98/ if you haven't finish the build process.
+You can visit ~~http: // 47.100.55.98/~~ (not available currently), if you haven't finish the build process.
 
 #### Login
 
